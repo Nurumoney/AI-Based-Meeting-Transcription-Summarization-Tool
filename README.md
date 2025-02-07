@@ -1,55 +1,47 @@
 # Meeting Transcription & Summarization Tool
-**Where Your Meetings Find Their Voice 🗣️✨**
+**An AI-Powered Desktop Application to Record, Transcribe, and Summarize Meetings**
 
 ## Description
-Welcome to the Meeting Transcription & Summarization Tool – your AI-powered meeting assistant that listens, transcribes, and distills lengthy conversations into crisp, actionable summaries. Whether you’re a busy professional, a student, or part of a dynamic team, this tool ensures you never miss a detail.
-
-Imagine: while you focus on the discussion, our tool captures every word, turns it into text, and then magically summarizes the key insights for you. It’s like having a personal scribe, available 24/7!
+This project is a desktop application designed to streamline meeting documentation. It records live audio from your microphone, transcribes the speech into text, and then summarizes the content using advanced NLP models. The primary components are:
+- **Audio Recording:** Captures audio via PyAudio.
+- **Speech Transcription:** Converts the audio file to text using Google’s Speech Recognition API.
+- **Text Summarization:** Uses Hugging Face Transformers to create a concise summary.
+- **Graphical User Interface:** Provides an intuitive control panel built with Tkinter.
 
 ## Table of Contents
-- [Introduction](#introduction)
-- [Installation & Setup](#installation--setup)
-- [How to Use](#how-to-use)
+- [Installation/Getting Started](#installationgetting-started)
+- [Usage](#usage)
+- [Technical Details](#technical-details)
 - [Features](#features)
-- [Configuration & Customization](#configuration--customization)
-- [Screenshots](#screenshots)
-- [Contributing](#contributing)
+- [Configuration/Customization](#configurationcustomization)
+- [Contributing Guidelines](#contributing-guidelines)
 - [License](#license)
-- [Contact & Support](#contact--support)
-- [Credits & Acknowledgments](#credits--acknowledgments)
+- [Contact/Support](#contactsupport)
+- [Credits/Acknowledgments](#creditsacknowledgments)
+- [Screenshots](#screenshots)
 
-## Introduction
-Our tool is designed to streamline your meeting workflow by automating:
-- **Audio Recording:** Capture live audio directly from your microphone.
-- **Speech-to-Text Conversion:** Transcribe spoken words using Google’s Speech Recognition API.
-- **Text Summarization:** Condense long transcripts into succinct summaries using cutting-edge NLP models from Hugging Face.
-
-Let technology do the heavy lifting so you can focus on the conversation!
-
-## Installation & Setup
+## Installation/Getting Started
 
 ### Prerequisites
-- **Python 3.x** (Recommended: 3.7+)
-- **pip** – the Python package installer
+- Python 3.x (version 3.7+ recommended)
+- pip (Python package installer)
 
-### Step-by-Step Instructions
-
+### Steps
 1. **Clone the Repository:**
    ```bash
    git clone https://github.com/yourusername/MeetingTranscriptionApp.git
    cd MeetingTranscriptionApp
    ```
 
-2. **Create a Virtual Environment (Optional but Recommended):**
+2. **Set Up a Virtual Environment (Recommended):**
    ```bash
    python -m venv venv
    ```
-   Activate it:
-   - **Windows:**
+   - On Windows:
      ```bash
      venv\Scripts\activate
      ```
-   - **macOS/Linux:**
+   - On macOS/Linux:
      ```bash
      source venv/bin/activate
      ```
@@ -59,68 +51,89 @@ Let technology do the heavy lifting so you can focus on the conversation!
    pip install -r requirements.txt
    ```
 
-4. **Launch the Application:**
+4. **Run the Application:**
    ```bash
    python main.py
    ```
 
-## How to Use
-Once the application window pops up (crafted with a simple, intuitive Tkinter GUI), you can:
-- **Start Recording:** Hit the **"Start Recording"** button to capture your live meeting audio.
-- **Stop Recording:** Click **"Stop Recording"** to end the session and save your recording.
-- **Transcribe & Summarize:** Press **"Transcribe & Summarize"** to turn your audio into text and generate a summary instantly.
+## Usage
+Upon running the application, you will see a window with three primary buttons:
+- **Start Recording:** Begins capturing live audio.
+- **Stop Recording:** Ends the capture and saves the audio to `output.wav`.
+- **Transcribe & Summarize:** Processes the saved audio—first transcribing the speech into text, then summarizing it. The full transcript and summary are displayed in the output text area.
 
-Watch as your meeting transforms from a stream of sound to clear, actionable insights!
+## Technical Details
+
+### Project Structure
+- **config.py:**  
+  Stores configuration parameters (e.g., audio buffer size, format, channels, sample rate, and output filename).
+
+- **audio_recorder.py:**  
+  - Uses PyAudio to open an input stream with the parameters from `config.py`.
+  - Continuously reads audio data in chunks and stores them in a list.
+  - Upon stopping, it writes the audio frames to `output.wav` using Python’s `wave` module.
+
+- **transcriber.py:**  
+  - Loads the recorded WAV file and uses the SpeechRecognition library to transcribe audio to text.
+  - Passes the transcription to a Hugging Face Transformers summarization pipeline to produce a concise summary.
+
+- **main.py:**  
+  - Implements a Tkinter-based GUI.
+  - Integrates recording, transcription, and summarization functions.
+  - Displays the output (full transcript and summary) in a scrollable text area.
+
+### How It Works
+1. **Recording:**
+   - The `start_recording()` function sets a flag and spawns a new thread that calls `record_audio()`.
+   - `record_audio()` reads audio in real time from the microphone using PyAudio and stores the data.
+   - When `stop_recording()` is called, the audio frames are written to `output.wav`.
+
+2. **Transcription:**
+   - The `transcribe_audio()` function uses SpeechRecognition’s `recognize_google()` method to convert the audio in `output.wav` into text.
+
+3. **Summarization:**
+   - The `summarize_text()` function initializes a summarization pipeline from Hugging Face Transformers.
+   - It processes the transcribed text to generate a summary, taking into account parameters like minimum and maximum lengths.
+
+4. **GUI Operation:**
+   - Tkinter buttons are linked to these functions, ensuring that users can control the entire workflow via the graphical interface.
 
 ## Features
-- **Live Audio Recording:** Capture high-quality audio with ease.
-- **Accurate Transcription:** Leverage Google’s Speech Recognition API for reliable text conversion.
-- **Smart Summarization:** Use Hugging Face’s Transformers to generate concise summaries.
-- **User-Friendly Interface:** Enjoy an elegant, straightforward GUI built with Tkinter.
-- **Error Resilience:** Built-in error handling to guide you through any hiccups.
+- **Real-Time Audio Recording:** Captures live audio using your system’s microphone.
+- **Accurate Speech-to-Text:** Utilizes Google’s Speech Recognition API for transcription.
+- **Automated Summarization:** Leverages a pre-trained NLP model to create concise summaries.
+- **User-Friendly Interface:** Built with Tkinter for ease of use.
+- **Modular Codebase:** Organized into distinct modules for configuration, recording, transcription, and GUI management.
 
-## Configuration & Customization
-Tailor your experience by editing the configuration:
-- **Audio Settings:** Adjust variables like `CHUNK`, `FORMAT`, `CHANNELS`, `RATE`, and `WAVE_OUTPUT_FILENAME` in `config.py`.
-- **Summarization Tweaks:** Modify summarizer parameters (e.g., `max_length`, `min_length`) in `transcriber.py` to suit your needs.
-- **Model Selection:** Easily switch to different pre-trained models by updating the pipeline in `transcriber.py`.
+## Configuration/Customization
+- **Audio Parameters:** Adjust the recording settings (CHUNK size, FORMAT, CHANNELS, RATE, and output filename) in `config.py`.
+- **Summarization Settings:** Modify summarization parameters (e.g., `max_length`, `min_length`) in `transcriber.py` to fine-tune the summary.
+- **Model Selection:** Change the summarization model by altering the pipeline initialization in `transcriber.py`.
 
-## Screenshots
-Show off your tool! Replace the paths below with your project screenshots:
-  
-![Main Interface](path/to/screenshot1.png)  
-*The intuitive interface at a glance.*
-
-![Recording in Action](path/to/screenshot2.png)  
-*Recording session capturing live audio.*
-
-## Contributing
-We welcome your creativity and collaboration! To contribute:
-1. **Fork** this repository.
-2. **Create a new branch**: `git checkout -b feature/your-feature-name`
-3. **Commit your changes** with clear, descriptive messages.
-4. **Submit a Pull Request** detailing your improvements or fixes.
-
-For more details, see our [CONTRIBUTING.md](CONTRIBUTING.md).
+## Contributing Guidelines
+Contributions are welcome! To contribute:
+1. **Fork** the repository.
+2. **Create a New Branch** for your feature or bug fix.
+3. **Commit** your changes with clear, descriptive messages.
+4. **Open a Pull Request** detailing your improvements.
+For more details, refer to our [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
-Distributed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the [MIT License](LICENSE).
 
-## Contact & Support
-Have questions, ideas, or need help? Reach out via:
-- **GitHub Issues:** Report bugs or request features.
-- **Email:** [your-email@example.com](mailto:your-email@example.com)
-- **Community Chat:** Join our discussion (if available).
+## Contact/Support
+For questions, suggestions, or issues:
+- **GitHub Issues:** Open an issue in the repository.
+- **Email:** [your-email@example.com](mailto:your-email@example.com).
 
-## Credits & Acknowledgments
-A heartfelt thank you to:
-- **PyAudio** for seamless audio capture.
-- **SpeechRecognition** for converting speech into text.
-- **Hugging Face Transformers** for powering the summarization engine.
-- The open-source community for continuous inspiration and support.
+## Credits/Acknowledgments
+- **PyAudio:** For handling live audio recording.
+- **SpeechRecognition:** For converting audio to text.
+- **Transformers (Hugging Face):** For providing the summarization model.
+- **Tkinter:** For the desktop GUI.
+- Thanks to all the open-source contributors whose work made this project possible.
 
----
-
-*Let your meetings speak – and let us help you listen!*  
-![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+## Screenshots
+![Screenshot 1](path/to/screenshot1.png)
+![Screenshot 2](path/to/screenshot2.png)
+```
