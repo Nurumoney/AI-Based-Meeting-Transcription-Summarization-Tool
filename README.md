@@ -116,15 +116,11 @@ Contributions are welcome! To contribute:
 2. **Create a New Branch** for your feature or bug fix.
 3. **Commit** your changes with clear, descriptive messages.
 4. **Open a Pull Request** detailing your improvements.
-For more details, refer to our [CONTRIBUTING.md](CONTRIBUTING.md).
-
-## License
-This project is licensed under the [MIT License](LICENSE).
 
 ## Contact/Support
 For questions, suggestions, or issues:
 - **GitHub Issues:** Open an issue in the repository.
-- **Email:** [your-email@example.com](mailto:your-email@example.com).
+- **Email:** [your-email@example.com](vaskarb.cs.20@nitj.ac.in)
 
 ## Credits/Acknowledgments
 - **PyAudio:** For handling live audio recording.
