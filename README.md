@@ -4,7 +4,7 @@ It is a Python-based desktop application designed to automate the process of doc
 
 ---
 
-https://github.com/Vaskar71/AI-Based-Meeting-Transcription-and-Summarization-Desktop-App/blob/main/Text%20summarize.png?raw=true
+<img width="1280" alt="Image" src="https://github.com/user-attachments/assets/f0699b4c-3ddf-4be7-8a17-62614b019ce6" />
 
 ## How It Works 
 
@@ -27,7 +27,7 @@ https://github.com/Vaskar71/AI-Based-Meeting-Transcription-and-Summarization-Des
      - **Stop Recording:** Ends the audio capture and saves the recorded data.  
      - **Transcribe & Summarize:** Initiates the process of converting audio to text and generating a summary.  
      - **Display:** The full transcript and its summary are shown in a scrollable text area for easy review.
-
+<img width="598" alt="Image" src="https://github.com/user-attachments/assets/a35b7a8f-4a4b-4498-88e8-984a67f300d1" />
 ---
 
 ## Tech Stack
