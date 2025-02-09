@@ -1,135 +1,67 @@
-# Meeting Transcription & Summarization Tool
-**An AI-Powered Desktop Application to Record, Transcribe, and Summarize Meetings**
+# AI-Based Meeting Transcription & Summarization Tool
 
-## Description
-This project is a desktop application designed to streamline meeting documentation. It records live audio from your microphone, transcribes the speech into text, and then summarizes the content using advanced NLP models. The primary components are:
-- **Audio Recording:** Captures audio via PyAudio.
-- **Speech Transcription:** Converts the audio file to text using Google’s Speech Recognition API.
-- **Text Summarization:** Uses Hugging Face Transformers to create a concise summary.
-- **Graphical User Interface:** Provides an intuitive control panel built with Tkinter.
+It is a Python-based desktop application designed to automate the process of documenting meetings. It integrates live audio capture, AI-driven speech-to-text conversion, and advanced text summarization into one seamless workflow. Below is an outline of how the project works, the technology used, and how to deploy it on your system.
 
-## Table of Contents
-- [Installation/Getting Started](#installationgetting-started)
-- [Usage](#usage)
-- [Technical Details](#technical-details)
-- [Features](#features)
-- [Configuration/Customization](#configurationcustomization)
-- [Contributing Guidelines](#contributing-guidelines)
-- [License](#license)
-- [Contact/Support](#contactsupport)
-- [Credits/Acknowledgments](#creditsacknowledgments)
-- [Screenshots](#screenshots)
+---
 
-## Installation/Getting Started
+## How It Works 
 
-### Prerequisites
-- Python 3.x (version 3.7+ recommended)
-- pip (Python package installer)
+1. **Audio Recording:**  
+   - **Process:** The application uses PyAudio to capture live audio from your system’s microphone. Audio is continuously read in small chunks and stored temporarily.  
+   - **Output:** Once the recording is stopped, the collected audio data is saved as a WAV file using Python’s standard `wave` module.
 
-### Steps
-1. **Clone the Repository:**
-   ```bash
-   git clone https://github.com/yourusername/MeetingTranscriptionApp.git
-   cd MeetingTranscriptionApp
-   ```
+2. **Speech Transcription:**  
+   - **Process:** The saved audio file is processed by the SpeechRecognition library. Leveraging Google’s Speech Recognition API, the application converts the speech in the WAV file into a complete text transcript.  
+   - **Output:** The result is a detailed transcript of the entire audio recording.
 
-2. **Set Up a Virtual Environment (Recommended):**
-   ```bash
-   python -m venv venv
-   ```
-   - On Windows:
-     ```bash
-     venv\Scripts\activate
-     ```
-   - On macOS/Linux:
-     ```bash
-     source venv/bin/activate
-     ```
+3. **Text Summarization:**  
+   - **Process:** The complete transcript is then passed to a text summarization engine powered by Hugging Face’s Transformers. The summarization model condenses the transcript into a brief summary that captures the key points of the meeting.  
+   - **Output:** A concise summary is generated, providing an overview of the main discussion points.
 
-3. **Install Dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+4. **Graphical User Interface (GUI):**  
+   - **Framework:** The entire workflow is controlled through a user-friendly desktop interface built with Tkinter.  
+   - **Functionality:**  
+     - **Start Recording:** Begins capturing live audio.  
+     - **Stop Recording:** Ends the audio capture and saves the recorded data.  
+     - **Transcribe & Summarize:** Initiates the process of converting audio to text and generating a summary.  
+     - **Display:** The full transcript and its summary are shown in a scrollable text area for easy review.
 
-4. **Run the Application:**
-   ```bash
-   python main.py
-   ```
+---
 
-## Usage
-Upon running the application, you will see a window with three primary buttons:
-- **Start Recording:** Begins capturing live audio.
-- **Stop Recording:** Ends the capture and saves the audio to `output.wav`.
-- **Transcribe & Summarize:** Processes the saved audio—first transcribing the speech into text, then summarizing it. The full transcript and summary are displayed in the output text area.
+## Tech Stack
 
-## Technical Details
+- **Programming Language:** Python  
+- **Audio Processing:**  
+  - **PyAudio:** For live audio capture.  
+  - **wave:** For writing audio data to a file.
+- **Speech Recognition:**  
+  - **SpeechRecognition:** Utilizes Google’s Speech Recognition API to convert audio to text.
+- **Natural Language Processing:**  
+  - **Hugging Face Transformers:** Provides the summarization capabilities.
+- **User Interface:**  
+  - **Tkinter:** Creates the desktop GUI.
+- **Concurrency:**  
+  - **threading:** Ensures audio recording runs concurrently without freezing the GUI.
 
-### Project Structure
-- **config.py:**  
-  Stores configuration parameters (e.g., audio buffer size, format, channels, sample rate, and output filename).
+---
 
-- **audio_recorder.py:**  
-  - Uses PyAudio to open an input stream with the parameters from `config.py`.
-  - Continuously reads audio data in chunks and stores them in a list.
-  - Upon stopping, it writes the audio frames to `output.wav` using Python’s `wave` module.
+## How to Use the Application
 
-- **transcriber.py:**  
-  - Loads the recorded WAV file and uses the SpeechRecognition library to transcribe audio to text.
-  - Passes the transcription to a Hugging Face Transformers summarization pipeline to produce a concise summary.
+1. **Installation:**
+   - **Clone the Repository:**  
+     Clone the project repository from GitHub to your local system.
+   - **Set Up Environment:**  
+     Create and activate a Python virtual environment (optional but recommended).
+   - **Install Dependencies:**  
+     Install all required dependencies using the provided `requirements.txt` file.
 
-- **main.py:**  
-  - Implements a Tkinter-based GUI.
-  - Integrates recording, transcription, and summarization functions.
-  - Displays the output (full transcript and summary) in a scrollable text area.
+2. **Running the Application:**
+   - **Launch:**  
+     Run the main script (e.g., `python main.py`) to start the desktop application.
+   - **Workflow:**  
+     - Click **Start Recording** to capture live audio from your microphone.
+     - Click **Stop Recording** to finish the capture and save the audio file.
+     - Click **Transcribe & Summarize** to process the audio—first converting it to text and then generating a summary.
+   - **Output:**  
+     The application displays both the full transcript and the summarized version within the GUI.
 
-### How It Works
-1. **Recording:**
-   - The `start_recording()` function sets a flag and spawns a new thread that calls `record_audio()`.
-   - `record_audio()` reads audio in real time from the microphone using PyAudio and stores the data.
-   - When `stop_recording()` is called, the audio frames are written to `output.wav`.
-
-2. **Transcription:**
-   - The `transcribe_audio()` function uses SpeechRecognition’s `recognize_google()` method to convert the audio in `output.wav` into text.
-
-3. **Summarization:**
-   - The `summarize_text()` function initializes a summarization pipeline from Hugging Face Transformers.
-   - It processes the transcribed text to generate a summary, taking into account parameters like minimum and maximum lengths.
-
-4. **GUI Operation:**
-   - Tkinter buttons are linked to these functions, ensuring that users can control the entire workflow via the graphical interface.
-
-## Features
-- **Real-Time Audio Recording:** Captures live audio using your system’s microphone.
-- **Accurate Speech-to-Text:** Utilizes Google’s Speech Recognition API for transcription.
-- **Automated Summarization:** Leverages a pre-trained NLP model to create concise summaries.
-- **User-Friendly Interface:** Built with Tkinter for ease of use.
-- **Modular Codebase:** Organized into distinct modules for configuration, recording, transcription, and GUI management.
-
-## Configuration/Customization
-- **Audio Parameters:** Adjust the recording settings (CHUNK size, FORMAT, CHANNELS, RATE, and output filename) in `config.py`.
-- **Summarization Settings:** Modify summarization parameters (e.g., `max_length`, `min_length`) in `transcriber.py` to fine-tune the summary.
-- **Model Selection:** Change the summarization model by altering the pipeline initialization in `transcriber.py`.
-
-## Contributing Guidelines
-Contributions are welcome! To contribute:
-1. **Fork** the repository.
-2. **Create a New Branch** for your feature or bug fix.
-3. **Commit** your changes with clear, descriptive messages.
-4. **Open a Pull Request** detailing your improvements.
-
-## Contact/Support
-For questions, suggestions, or issues:
-- **GitHub Issues:** Open an issue in the repository.
-- **Email:** [your-email@example.com](vaskarb.cs.20@nitj.ac.in)
-
-## Credits/Acknowledgments
-- **PyAudio:** For handling live audio recording.
-- **SpeechRecognition:** For converting audio to text.
-- **Transformers (Hugging Face):** For providing the summarization model.
-- **Tkinter:** For the desktop GUI.
-- Thanks to all the open-source contributors whose work made this project possible.
-
-## Screenshots
-![Screenshot 1](path/to/screenshot1.png)
-![Screenshot 2](path/to/screenshot2.png)
-```
