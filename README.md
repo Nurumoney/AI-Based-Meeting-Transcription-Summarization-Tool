@@ -27,6 +27,7 @@ It is a Python-based desktop application designed to automate the process of doc
      - **Stop Recording:** Ends the audio capture and saves the recorded data.  
      - **Transcribe & Summarize:** Initiates the process of converting audio to text and generating a summary.  
      - **Display:** The full transcript and its summary are shown in a scrollable text area for easy review.
+      
 <img width="598" alt="Image" src="https://github.com/user-attachments/assets/a35b7a8f-4a4b-4498-88e8-984a67f300d1" />
 ---
 
