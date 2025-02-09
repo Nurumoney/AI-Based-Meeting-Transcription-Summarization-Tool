@@ -3,6 +3,7 @@
 It is a Python-based desktop application designed to automate the process of documenting meetings. It integrates live audio capture, AI-driven speech-to-text conversion, and advanced text summarization into one seamless workflow. Below is an outline of how the project works, the technology used, and how to deploy it on your system.
 
 ---
+https://github.com/Vaskar71/AI-Based-Meeting-Transcription-and-Summarization-Desktop-App/blob/main/Text%20summarize.png?raw=true
 
 ## How It Works 
 
