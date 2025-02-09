@@ -29,6 +29,7 @@ It is a Python-based desktop application designed to automate the process of doc
      - **Display:** The full transcript and its summary are shown in a scrollable text area for easy review.
       
 <img width="598" alt="Image" src="https://github.com/user-attachments/assets/a35b7a8f-4a4b-4498-88e8-984a67f300d1" />
+
 ---
 
 ## Tech Stack
